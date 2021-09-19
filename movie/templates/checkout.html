@@ -1,0 +1,166 @@
+    {% extends "basic.html"%}
+    {% block title %}
+    CHECKOUT FORM
+    {% endblock title%}
+
+    {% block css%}
+
+    {% endblock css%}
+    {% block body%}
+    <div class="bhai" style="background-color: #e6f2ff; font-family: Times New Roman">
+    <div 
+    class="container"
+    >
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="https://goirtineve.files.wordpress.com/2014/11/movie-reviews-icon11.jpg"
+                alt="" width="72" height="72">
+            <h2>CHECKOUT FORM </h2>
+            <p class="lead">Your items are ready to checkout please fill this form........</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 order-md-1">
+                <h4 class="mb-3">BILLING ADDRESS</h4>
+                <form action="/movie/submitcheckout/" class="needs-validation" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="jsonCart" value="{{data}}" id="jsonCartHidden">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName">FIRST NAME : </label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" name="first_name"
+                                required>
+                            <div class="invalid-feedback">
+                                YOUR FIRST NAME IS INVALID. VALID FIRST NAME IS REQUIRED.
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName">LAST NAME : </label>
+                            <input type="text" class="form-control" id="lastName" placeholder="" name="last_name" required>
+                            <div class="invalid-feedback">
+                                YOUR LAST NAME IS INVALID. VALID LAST NAME IS REQUIRED.
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label for="email">EMAIL :  <span class="text-muted">(Optional)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="wasifhaju11@yahoo.com" name="email">
+                        <div class="invalid-feedback">
+                            PLEASE ENTER A VALID EMAIL ADDRESS FOR SHIPPING UPDATES.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address">ADDRESS : </label>
+                        <input type="text" name="address" class="form-control" id="address" placeholder="B/204, Ram Niwas.... "
+                            required>
+                        <div class="invalid-feedback">
+                            PLEASE ENTER YOUR VALID SHIPPING ADDRESS ... 
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="country">STATE </label>
+                            <select class="form-control custom-select d-block w-100" id="country" name="state" required>
+                                <option value="">CHOOSE YOUR STATE FROM THE LIST GIVEN BELOW...</option>
+                                <option>ANDHRA PRADSESH</option>
+                                <option>MAHARASHTRA</option>
+                                <option>BIHAR</option>
+                                <option>GOA</option>
+                                <option>UTTAR PRADESH</option>
+                                <option>TELANGANA</option>
+                                <option>WEST BENGAL</option>
+                                <option>ASSAM</option>
+                                <option>GUJARAT</option>
+                                <option>RAJASTHAN</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                PLEASE SELECT A VALID STATE
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="zip">ZIP</label>
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="400062" required>
+                            <div class="invalid-feedback">
+                                ENTER ZIP CODE. ZIP CODE IS MANDOTARY
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input name="isSameBillingAddress" type="checkbox" class="custom-control-input" id="same-address">
+                        <label class="custom-control-label" for="same-address">SHIPPING ADDRESS IS THE SAME AS MY BILLING ADDRESS</label>
+                    </div>
+
+                    <hr class="mb-4">
+                    <!-- <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button> -->
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" align="center"
+                        data-bs-target="#Modal">
+                        CONTINUE TO CHECKOUT
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel" align="center">FINAL STEP</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <ul class="list-group mb-3">
+
+                                                {% for key,value in data.items %}
+
+                                                <li class="list-group-item d-flex justify-content-between lh-sm">
+                                                    <div>
+                                                        <h6 class="my-0">{{value.name}}</h6>
+
+                                                    </div>
+                                                    <small class="text-muted"><span class="badge bg-success mx-2">RENT :
+                                                            {{value.price}}
+                                                            INR</span> </small>
+                                                </li>
+
+                                                {% endfor %}
+                                                <li class="list-group-item d-flex justify-content-between">
+                                                    <span>TOTAL:  (INR)</span>
+                                                    <strong>{{totalPrice}}</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">CONTINUE</button>
+                                    <button type="submit" class="btn btn-danger">BUY NOW !!!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2020-2021 SAM FLIX</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">PRIVACY</a></li>
+                <li class="list-inline-item"><a href="#">TERMS</a></li>
+                <li class="list-inline-item"><a href="#">SUPPORT</a></li>
+            </ul>
+        </footer>
+    </div>
+
+    <script></script>
+    {% endblock body %}

@@ -1,0 +1,10 @@
+h1{
+    font-family: 'Times New Roman', Times, serif;
+    color:red;
+}
+.movie-container{
+    flex-wrap: wrap;
+}
+.card-img-top{
+    max-height: 300px;
+}
